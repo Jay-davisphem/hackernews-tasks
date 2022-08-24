@@ -42,6 +42,34 @@ def get_results_keys(news_detail):
     return vals, (kids, parent, parts)
 
 
+def fetch_children(type, kids, par, obj, sm_n=5, gch=False):
+    if gch:
+        print("Grandchildren bossman")
+    if not kids:
+        return
+    for com_id in kids[:sm_n]:
+        print(
+            f"{obj._meta.model_name} parent_id",
+            par.id,
+            "child",
+            com_id,
+            end="...",
+        )
+        sing_com = fetch_news(f"{news_base_detail_url}{com_id}.json")
+        com_lte = get_results_keys(sing_com)
+        real_com = com_lte[0]
+        s_type = real_com["type"]
+        s_kids = com_lte[-1][0]
+        s_par = None
+        if type == "story":
+            s_par = obj.objects.create(**real_com, story_id=par.id)
+        else:
+            s_par = obj.objects.create(**real_com, poll_id=par.id)
+        print(f"{obj._meta.model_name} created successfully")
+        fetch_children(s_type, s_kids, s_par, obj, sm_n=2, gch=True)
+    print()
+
+
 def save_to_db(news_ids, num=10):
     news_ids = sorted(news_ids)[::num]  # latest top (num) news_ids
     news_dict = {
@@ -59,29 +87,9 @@ def save_to_db(news_ids, num=10):
         try:
             par = news_dict.get(type).objects.create(**news_vals)
             if kids and type in ("story", "poll"):
-                for com_id in kids[:5]:
-                    print("parent_id", par.id, "child", com_id, end="...")
-                    sing_com = fetch_news(f"{news_base_detail_url}{com_id}.json")
-                    com_lte = get_results_keys(sing_com)
-                    real_com = com_lte[0]
-                    if type == "story":
-                        com_res = Comment.objects.create(**real_com, story_id=par.id)
-                    else:
-                        com_res = Comment.objects.create(**real_com, poll_id=par.id)
-                    print("Comment created successfully")
-
-                print()
-
+                fetch_children(type, kids, par, Comment)
             if parts and type == "poll":
-                for opt_id in parts:
-                    print("parent_poll_id", par.id, "option", opt_id, end="...")
-                    sing_opt = fetch_news(f"{news_base_detail_url}{opt_id}.json")
-                    poll_lte = get_results_keys(sing_opt)
-                    real_opt = com_lte[0]
-                    opt_res = PollOption.objects.create(**real_opt, poll_id=par.id)
-                    print("Poll Option created successfully")
-                print()
-
+                fetch_children(type, parts, par, PollOption)
         except Exception as e:
             print(e, "failed to fetch")
             pass

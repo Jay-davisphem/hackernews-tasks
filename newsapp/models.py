@@ -106,7 +106,7 @@ class Comment(AllStories):
         "self", on_delete=models.CASCADE, related_name="comment_comments", null=True
     )
     story = models.ForeignKey(
-        Story, on_delete=models.CASCADE, related_name="story_comments"
+        Story, on_delete=models.CASCADE, related_name="story_comments", null=True
     )
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE, related_name='poll_comments', null=True)
     def __str__(self):
