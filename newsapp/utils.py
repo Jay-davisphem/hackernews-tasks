@@ -25,7 +25,7 @@ def get_results_keys(news_detail):
     title = news_detail.get("title")
     text = news_detail.get("text")
     score = news_detail.get("score", 0)
-    kids = news_detail.get("kids", [])
+    kids = list(reversed(sorted(news_detail.get("kids", []))))
     parent = news_detail.get("parent")
     parts = news_detail.get("parts", [])  # pollopt
     vals = {
@@ -71,7 +71,7 @@ def fetch_children(type, kids, par, obj, sm_n=5, gch=False):
 
 
 def save_to_db(news_ids, num=10):
-    news_ids = sorted(news_ids)[::num]  # latest top (num) news_ids
+    news_ids = list(reversed(sorted(news_ids)))[:num]  # latest top (num) news_ids
     news_dict = {
         "job": Job,
         "poll": Poll,
