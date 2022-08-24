@@ -2,6 +2,7 @@ import datetime as dt
 import os
 
 import requests
+from django.utils.timezone import make_aware
 
 from .models import Comment, Job, Poll, PollOption, Story
 
@@ -20,7 +21,7 @@ def get_results_keys(news_detail):
     obj_id = str(news_detail.get("id"))
     by = news_detail.get("by")
     secs = news_detail.get("time")
-    time = dt.datetime.utcfromtimestamp(secs) if secs else ""
+    time = make_aware(dt.datetime.fromtimestamp(secs))
     url = news_detail.get("url")
     title = news_detail.get("title")
     text = news_detail.get("text")
@@ -70,7 +71,7 @@ def fetch_children(type, kids, par, obj, sm_n=5, gch=False):
     print()
 
 
-def save_to_db(news_ids, num=10):
+def save_to_db(news_ids, num=5):
     news_ids = list(reversed(sorted(news_ids)))[:num]  # latest top (num) news_ids
     news_dict = {
         "job": Job,
@@ -94,3 +95,14 @@ def save_to_db(news_ids, num=10):
             print(e, "failed to fetch")
             pass
     return None
+
+
+def scheduled_tasks1():
+    print("Task started")
+    news_ids = fetch_news(top_news_url)
+    save_to_db(news_ids)
+    print("Task ran")
+
+
+def test_tasks():
+    print("Tasks running Halleluyahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
