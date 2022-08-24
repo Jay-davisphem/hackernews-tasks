@@ -15,6 +15,7 @@
             <option>Poll</option>
         </select>
         <input type='submit' value='Filter' />
+        <input type='reset' value='Reset filter' />
     </form>
     <form method='get' action=''>
         {% csrf_token %}
@@ -22,7 +23,7 @@
         <input type='submit' value='Search' />
     </form>
     <ul>
-        {% for i in show_show %}
+        {% for i in page_obj %}
         <li>
             <h2>Title: {{i.title}}-:::-{{i.type}}</h2>
             Author<span>{{i.by}}</span>
@@ -32,6 +33,37 @@
             {% endautoescape %}
         </li>
         {% endfor %}
+        <span>
+            {% if page_obj.has_previous %}
+            <a href="{% url 'listing' 1 %}">
+                ◀️◀️
+            </a>
+
+            <a href="{% url 'listing' page_obj.previous_page_number %}">
+                ◀️
+            </a>
+            {% endif%}
+            <a>{{page_obj.number}} of {{page_obj.paginator.num_pages}}</a>
+            {% if page_obj.has_next %}
+            <a href="{% url 'listing' page_obj.next_page_number %}">
+                ▶️
+            </a>
+            <a href="{% url 'listing' page_obj.paginator.num_pages %}">
+                ▶️▶️
+            </a>
+
+            {% endif%}
+            <hr />
+            {% for page_number in page_obj.adjusted_elided_pages %}
+            {% if page_number == page_obj.paginator.ELLIPSIS or page_number == page_obj.number %}
+            {{page_number}}
+            {% else %}
+            <a href="{% url 'listing' page_number %}" class="{% if page_number == page_obj.number %}current{% endif %}">
+                {{page_number}}
+            </a>
+            {% endif %}
+            {% endfor %}
+        </span>
     </ul>
 </body>
 

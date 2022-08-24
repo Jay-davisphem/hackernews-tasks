@@ -1,10 +1,17 @@
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render
 
 from .models import AllStories
 
 
-def home(request):
+def paginate(all_stories, page):
+    paginator = Paginator(all_stories, 2)
+    page_obj = paginator.get_page(page)
+    page_obj.adjusted_elided_pages = paginator.get_elided_page_range(page)
+
+
+def _listing(request, page=1):
     type_q = request.GET.get("type")
     search_q = request.GET.get("search")
     print(search_q)
@@ -25,4 +32,13 @@ def home(request):
         all_stories = all_stories.filter(q2)
     else:
         pass
-    return render(request, "home.html", {"show_show": all_stories})
+    page_obj = paginate(all_stories, page)
+    return render(request, "home.html", {"page_obj": page_obj})
+
+
+def home(request):
+    return _listing(request)
+
+
+def listing(request, page):
+    return _listing(request, page)
