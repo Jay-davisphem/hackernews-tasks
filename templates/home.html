@@ -6,10 +6,25 @@
 
 <body>
     <h1>News items</h1>
+    <form method='get' action=''>
+        {% csrf_token %}
+        <select name='type'>
+            <option value=''></option>
+            <option>Job</option>
+            <option>Story</option>
+            <option>Poll</option>
+        </select>
+        <input type='submit' value='Filter' />
+    </form>
+    <form method='get' action=''>
+        {% csrf_token %}
+        <input type='search' name='search' />
+        <input type='submit' value='Search' />
+    </form>
     <ul>
         {% for i in show_show %}
         <li>
-            <h2>Title: {{i.title}}</h2>
+            <h2>Title: {{i.title}}-:::-{{i.type}}</h2>
             Author<span>{{i.by}}</span>
             Time: <span>{{i.time|timesince}} ago</span>
             {% autoescape off %}

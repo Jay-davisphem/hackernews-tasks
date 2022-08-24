@@ -4,10 +4,13 @@ import os
 import requests
 from django.utils.timezone import make_aware
 
-from .models import Comment, Job, Poll, PollOption, Story
+from .models import AllStories, Comment, Job, Poll, PollOption, Story
 
-top_news_url = os.getenv("top_news_url")
-news_base_detail_url = os.getenv("news_base_detail_url")
+news_base_detail_url = "https://hacker-news.firebaseio.com/v0/item/"
+top_news_url = "https://hacker-news.firebaseio.com/v0/topstories.json"
+show_news_url = "https://hacker-news.firebaseio.com/v0/showstories.json"
+ask_news_url = "https://hacker-news.firebaseio.com/v0/askstories.json"
+job_news_url = "https://hacker-news.firebaseio.com/v0/jobstories.json"
 
 
 def fetch_news(url):
@@ -44,10 +47,9 @@ def get_results_keys(news_detail):
 
 
 def fetch_children(type, kids, par, obj, sm_n=5, gch=False):
-    if gch:
-        print("Grandchildren bossman")
     if not kids:
         return
+
     for com_id in kids[:sm_n]:
         print(
             f"{obj._meta.model_name} parent_id",
@@ -67,12 +69,21 @@ def fetch_children(type, kids, par, obj, sm_n=5, gch=False):
         else:
             s_par = obj.objects.create(**real_com, poll_id=par.id)
         print(f"{obj._meta.model_name} created successfully")
+        if gch:
+            print("Grandchildren bossman")
         fetch_children(s_type, s_kids, s_par, obj, sm_n=2, gch=True)
     print()
 
 
 def save_to_db(news_ids, num=5):
-    news_ids = list(reversed(sorted(news_ids)))[:num]  # latest top (num) news_ids
+
+    news_ids = list(reversed(sorted(news_ids)))[:num]
+    if news_ids:
+        exists = AllStories.objects.filter(obj_id=news_ids[0]).exists()
+        if exists:
+            return
+    else:
+        return
     news_dict = {
         "job": Job,
         "poll": Poll,
@@ -99,7 +110,12 @@ def save_to_db(news_ids, num=5):
 
 def scheduled_tasks1():
     print("Task started")
-    news_ids = fetch_news(top_news_url)
+    news_ids = (
+        fetch_news(top_news_url)
+        + fetch_news(show_news_url)
+        + fetch_news(job_news_url)
+        + fetch_news(ask_news_url)
+    )
     save_to_db(news_ids)
     print("Task ran")
 

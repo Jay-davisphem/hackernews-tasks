@@ -118,6 +118,6 @@ CELERY_RESULT_BACKEND = "redis://localhost:6379"
 CELERY_BEAT_SCHEDULE = {
     "scheduled_fetch_hackernews": {
         "task": "newsapp.tasks.scheduled_task",
-        "schedule": crontab(minute="*/5"),
+        "schedule": crontab(minute="*/1"),
     },
 }
