@@ -3,17 +3,20 @@ from django.db import models
 
 class AllStories(models.Model):
     base_type = "all"
+    obj_id = models.CharField(max_length=255, default=None, null=True)
+    fetched = models.BooleanField(default=False)
     type = models.CharField(max_length=100)
-    by = models.CharField(max_length=100)
+    by = models.CharField(max_length=100, null=True)
     time = models.DateTimeField(editable=True)  # creation date
-    url = models.CharField(max_length=500)
-    title = models.CharField(max_length=200)
-    text = models.TextField()
-    score = models.BigIntegerField(default=0)
+    url = models.URLField(max_length=500, null=True)
+    title = models.CharField(max_length=200, null=True)
+    text = models.TextField(null=True)
+    score = models.BigIntegerField(default=0, null=True)
 
     class Meta:
         verbose_name = "All Story"
         verbose_name_plural = "All Stories"
+        ordering = ['-time']
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -100,20 +103,20 @@ class Poll(AllStories):
 class Comment(AllStories):
     base_type = "comment"
     kids = models.ForeignKey(
-        "self", on_delete=models.CASCADE, related_name="comment_comments"
+        "self", on_delete=models.CASCADE, related_name="comment_comments", null=True
     )
-    parent = models.ForeignKey(
-        Story, on_delete=models.CASCADE, related_name="comments_story"
+    story = models.ForeignKey(
+        Story, on_delete=models.CASCADE, related_name="story_comments"
     )
-
+    poll = models.ForeignKey(Poll, on_delete=models.CASCADE, related_name='poll_comments', null=True)
     def __str__(self):
         return f"Comment {self.by} - {self.id}"
 
 
 class PollOption(AllStories):
     base_type = "pollopt"
-    parent = models.ForeignKey(
-        Poll, on_delete=models.CASCADE, related_name="polloptions_poll"
+    poll = models.ForeignKey(
+        Poll, on_delete=models.CASCADE, related_name="poll_polloptions"
     )
 
     def __str__(self):

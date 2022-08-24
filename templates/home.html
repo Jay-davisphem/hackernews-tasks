@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+    <h1>News items</h1>
+    <ul>
+        {% for i in show_show %}
+        <li>
+            <h2>Title: {{i.title}}</h2>
+            Author<span>{{i.by}}</span>
+            Time: <span>{{i.time|timesince}} ago</span>
+            {% autoescape off %}
+            <p>{{i.text}}</p>
+            {% endautoescape %}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+
+</htmL>

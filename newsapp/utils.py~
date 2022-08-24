@@ -1,0 +1,79 @@
+import datetime as dt
+import os
+
+import requests
+
+from .models import Comment, Job, Poll, PollOption, Story
+
+top_news_url = os.getenv("top_news_url")
+news_base_detail_url = os.getenv("news_base_detail_url")
+
+
+def fetch_news(url):
+    r = requests.get(url)
+    if r.status_code == 200:
+        return r.json()
+
+
+def get_results_keys(news_detail):
+    type = news_detail.get("type")
+    obj_id = str(news_detail.get("id"))
+    by = news_detail.get("by")
+    secs = news_detail.get("time")
+    time = dt.datetime.utcfromtimestamp(secs) if secs else ""
+    url = news_detail.get("url")
+    title = news_detail.get("title")
+    text = news_detail.get("text")
+    score = news_detail.get("score", 0)
+    kids = news_detail.get("kids", [])
+    parent = news_detail.get("parent")
+
+    vals = {
+        "type": type,
+        "obj_id": obj_id,
+        "by": by,
+        "time": time,
+        "url": url,
+        "title": title,
+        "text": text,
+        "score": score,
+        "kids": kids,
+        "parent": parent,
+        "fetched": True,
+    }
+    if type in ("job", "poll", "story"):
+        del vals["kids"], vals["parent"]
+    if type == "pollopt":
+        del vals["kids"]
+    return vals
+
+
+def save_to_db(news_ids, num=10):
+    news_ids = sorted(news_ids)[-num:][::-1]  # latest top (num) news_ids
+    news_dict = {
+        "job": Job,
+        "poll": Poll,
+        "story": Story,
+    }
+    for i in news_ids:
+        news_detail = fetch_news(f"{news_base_detail_url}{i}.json")
+        news_vals = get_results_keys(news_detail)
+        kids = news_vals.get("kids", [])
+        type = news_vals.get("type")
+        try:
+            if kids and type in ("story", "job"):
+                for com_id in kids:
+                    print(com_id, end="...")
+                    # sing_com = fetch_news(f"{news_base_detail_url}{com_id}.json")
+                print()
+
+            if kids and type == "poll":
+                for opt_id in kids:
+                    print(opt_id, end=" ")
+                print()
+
+            news_dict.get(type).objects.create(**news_vals)
+        except Exception as e:
+            print(e, "failed to fetch")
+            pass
+    return None
