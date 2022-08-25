@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from newsapp.models import AllStories, Comment, Job, Poll, PollOption, Story
 from rest_framework import status, viewsets
@@ -37,6 +38,31 @@ class AllStoriesViewSet(viewsets.ModelViewSet):
     queryset = AllStories.objects.exclude(type__in=("comment", "pollopt"))
     serializer_class = AllStoriesSerializers
 
+    def list(self, request):
+        type = request.GET.get("type")
+        text = request.GET.get("text")
+        fetched = request.GET.get("fetched")
+        print(type, text, fetched)
+        qs = self.queryset
+        if type and text and fetched != None:
+            qs = qs.filter(
+                text__icontains=text.lower(), type=type.lower(), fetched=fetched
+            )
+        else:
+            if fetched != None:
+                qs = qs.filter(fetched=fetched)
+            if type:
+                qs = qs.filter(type=type.lower())
+            if text:
+                qs = qs.filter(text__icontains=text.lower())
+
+        page = self.paginate_queryset(qs)
+        if page:
+            data = AllStoriesSerializers(page, many=True).data
+            return self.get_paginated_response(data)
+        data = AllStoriesSerializers(qs, many=True).data
+        return Response(data)
+
     def create(self, request):
         ser = AllStoriesSerializers(data=request.data)
         stor = {"job": Job, "story": Story, "poll": Poll}
@@ -52,7 +78,9 @@ class AllStoriesViewSet(viewsets.ModelViewSet):
             del data["text"]
             del data["by"]
             del data["url"]
-            sobj = stor[type].objects.create(**data, score=score, url=url, text=text, by=by)
+            sobj = stor[type].objects.create(
+                **data, score=score, url=url, text=text, by=by
+            )
             sobj.obj_id = sobj.id
             sobj.save()
             return Response("Successfully created", status=status.HTTP_201_CREATED)
