@@ -1,0 +1,17 @@
+<section class='comment-sec'>
+    {% for comment in comments %}
+    <section class='oga-comment'>
+        <span>
+            {{comment.by}} | <a href="{{comment.url}}">{{comment.time|timesince}} ago</a> | {{comment.score}} upvotes</span>
+        <p>{{comment.text}}</p>
+    </section>
+    <hr />
+    {% for comment in comment.comment_set %}
+    <section class='oga-comment'>
+        <span>
+            {{comment.by}} | <a href="{{comment.url}}">{{comment.time|timesince}} ago</a> | {{comment.score}} upvotes</span>
+        {{comment.text}}
+    </section>
+    {% endfor %}
+    {% endfor %}
+</section>

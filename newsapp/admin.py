@@ -5,7 +5,7 @@ from .models import AllStories, Comment, Job, Poll, PollOption, Story
 
 class CommentInline(admin.TabularInline):
     model = Comment
-    fields = ["text", "by"]
+    fields = ["text", "by", "kids"]
 
 
 class Comment1Inline(CommentInline):
@@ -28,7 +28,7 @@ class Comment3Inline(CommentInline):
 
 class CommentAdmin(admin.ModelAdmin):
     inlines = [Comment1Inline]
-    fields = ["text", "by"]
+    fields = ["text", "by", "poll", "story"]
 
 
 class StoryAdmin(admin.ModelAdmin):

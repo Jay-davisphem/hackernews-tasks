@@ -1,0 +1,34 @@
+<section class='pagination'>
+    <section class='first-pag'>
+        {% if page_obj.has_previous %}
+        <a href="{% url 'listing' 1 %}" class='first'>
+            ◀️◀️
+        </a>
+
+        <a href="{% url 'listing' page_obj.previous_page_number %}" class='previous'>
+            ◀️
+        </a>
+        {% endif %}
+        <a class='num-of'>{{page_obj.number}} of {{page_obj.paginator.num_pages}}</a>
+        {% if page_obj.has_next %}
+        <a href="{% url 'listing' page_obj.next_page_number %}" class='next'>
+            ▶️
+        </a>
+        <a href="{% url 'listing' page_obj.paginator.num_pages %}" class='last'>
+            ▶️▶️
+        </a>
+
+        {% endif%}
+    </section>
+    <section class='second-pag'>
+        {% for page_number in page_obj.adjusted_elided_pages %}
+        {% if page_number == page_obj.paginator.ELLIPSIS or page_number == page_obj.number %}
+        {{page_number}}
+        {% else %}
+        <a href="{% url 'listing' page_number %}" class="{% if page_number == page_obj.number %}current{% endif %} pag-no">
+            {{page_number}}
+        </a>
+        {% endif %}
+        {% endfor %}
+    </section>
+</section>

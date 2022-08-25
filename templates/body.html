@@ -1,0 +1,31 @@
+{% load split_it %}
+{% if i.url %}
+<section class='h1-sib-cont'>
+    <a href="{{ i.url }}" class='h1'>{{i.title}}</a><a class='beside-h1' href="{{i.url}}">&nbsp;{{ i.url|strip_it:'' }}</a>
+    {% else %}
+    <a href="{% url 'comments' i.pk %}" class='h1'>{{ i.title }}</a>
+    {% endif %}
+</section>
+<section class='below-h1-sib-cont'>
+    <span class='below-h1'>{{ i.score }} points by {{i.by}} <a href="{% url 'comments' i.pk %}">{{i.time|timesince}} ago</a></span>
+    {% if i.type == 'story' or i.type == 'poll' %}
+    |
+    {% endif %}
+    <a href="{% url 'comments' i.pk %}">
+        {% if i.type == 'story' %}
+        {{ i.story_comments.count }}
+        {% if i.story_comments.count > 1 %}
+        comments
+        {% else %}
+        comment
+        {% endif %}
+        {% elif i.type == 'poll' %}
+        {{i.poll_comments}}
+        {% if i.poll_comments.count > 1 %}
+        comments
+        {% else %}
+        comment
+        {% endif %}
+        {% endif %}
+    </a>
+</section>

@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+{% block title %}Comments - {{i.title}}{% endblock %}
+{% block header %}
+{% endblock %}
+{% block main%}
+<section>
+    {% include 'body.html' %}
+    {% autoescape off %}
+
+    {% if i.text %}
+    {{i.text }}
+    {% endif %}
+    {% endautoescape %}
+</section>
+<hr />
+{% autoescape off%}
+{% include 'comments_block.html' %}
+{% endautoescape %}
+{% endblock %}

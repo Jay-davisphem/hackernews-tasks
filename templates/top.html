@@ -1,0 +1,18 @@
+<section class='top-most'>
+    <form method='get' action=''>
+        {% csrf_token %}
+        <select name='type'>
+            <option value=''></option>
+            <option>Job</option>
+            <option>Story</option>
+            <option>Poll</option>
+        </select>
+        <input type='submit' value='Filter' />
+        <input type='reset' value='Reset filter' />
+    </form>
+    <form method='get' action=''>
+        {% csrf_token %}
+        <input type='search' name='search' />
+        <input type='submit' value='Search' />
+    </form>
+</section>

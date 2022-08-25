@@ -1,70 +1,18 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-</head>
-
-<body>
-    <h1>News items</h1>
-    <form method='get' action=''>
-        {% csrf_token %}
-        <select name='type'>
-            <option value=''></option>
-            <option>Job</option>
-            <option>Story</option>
-            <option>Poll</option>
-        </select>
-        <input type='submit' value='Filter' />
-        <input type='reset' value='Reset filter' />
-    </form>
-    <form method='get' action=''>
-        {% csrf_token %}
-        <input type='search' name='search' />
-        <input type='submit' value='Search' />
-    </form>
-    <ul>
-        {% for i in page_obj %}
-        <li>
-            <h2>Title: {{i.title}}-:::-{{i.type}}</h2>
-            Author<span>{{i.by}}</span>
-            Time: <span>{{i.time|timesince}} ago</span>
-            {% autoescape off %}
-            <p>{{i.text}}</p>
-            {% endautoescape %}
-        </li>
-        {% endfor %}
-        <span>
-            {% if page_obj.has_previous %}
-            <a href="{% url 'listing' 1 %}">
-                ◀️◀️
-            </a>
-
-            <a href="{% url 'listing' page_obj.previous_page_number %}">
-                ◀️
-            </a>
-            {% endif%}
-            <a>{{page_obj.number}} of {{page_obj.paginator.num_pages}}</a>
-            {% if page_obj.has_next %}
-            <a href="{% url 'listing' page_obj.next_page_number %}">
-                ▶️
-            </a>
-            <a href="{% url 'listing' page_obj.paginator.num_pages %}">
-                ▶️▶️
-            </a>
-
-            {% endif%}
-            <hr />
-            {% for page_number in page_obj.adjusted_elided_pages %}
-            {% if page_number == page_obj.paginator.ELLIPSIS or page_number == page_obj.number %}
-            {{page_number}}
-            {% else %}
-            <a href="{% url 'listing' page_number %}" class="{% if page_number == page_obj.number %}current{% endif %}">
-                {{page_number}}
-            </a>
-            {% endif %}
-            {% endfor %}
-        </span>
-    </ul>
-</body>
-
-</htmL>
+{% extends 'layout.html' %}
+{% block header %}
+<header>
+    <h1>All News Items</h1>
+    {% include 'top.html' %}
+    {% include 'navbar.html' %}
+</header>
+{% endblock %}
+{% block main %}
+<ul style='list-style-type: none'>
+    {% for i in page_obj %}
+    <li class='each-heading'>
+    {% include 'body.html' %}
+    </li>
+    {% endfor %}
+    {% include 'pagination.html' %}
+</ul>
+{% endblock %}
