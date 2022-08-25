@@ -75,8 +75,7 @@ def fetch_children(type, kids, par, obj, sm_n=5, gch=False):
     print()
 
 
-def save_to_db(news_ids, num=5):
-
+def save_to_db(news_ids, num=20):
     news_ids = list(reversed(sorted(news_ids)))[:num]
     if news_ids:
         exists = AllStories.objects.filter(obj_id=news_ids[0]).exists()

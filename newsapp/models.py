@@ -7,7 +7,7 @@ class AllStories(models.Model):
     fetched = models.BooleanField(default=False)
     type = models.CharField(max_length=100)
     by = models.CharField(max_length=100, null=True)
-    time = models.DateTimeField(editable=True)  # creation date
+    time = models.DateTimeField(editable=True, auto_now_add=True)  # creation date
     url = models.URLField(max_length=500, null=True)
     title = models.CharField(max_length=200, null=True)
     text = models.TextField(null=True)

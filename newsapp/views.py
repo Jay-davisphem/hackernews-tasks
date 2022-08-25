@@ -6,9 +6,10 @@ from .models import AllStories
 
 
 def paginate(all_stories, page):
-    paginator = Paginator(all_stories, 2)
+    paginator = Paginator(all_stories, 5)
     page_obj = paginator.get_page(page)
     page_obj.adjusted_elided_pages = paginator.get_elided_page_range(page)
+    return page_obj
 
 
 def _listing(request, page=1):

@@ -6,9 +6,8 @@ from newsapp import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api-auth/", include("rest_framework.urls")),
-    path("", views.home, name="home"),
-    path("page/<int:page>/", views.listing, name="listing"),
+    path("", include("newsapp.urls")),
+    path("api/", include("newsapi.urls")),
 ]
 
 urlpatterns += static(
