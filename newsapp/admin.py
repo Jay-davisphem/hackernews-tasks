@@ -31,6 +31,14 @@ class CommentAdmin(admin.ModelAdmin):
     fields = ["text", "by", "poll", "story"]
 
 
+class AllStoriesAdmin(admin.ModelAdmin):
+    fields = ["title", "text", "by", "url", "score"]
+
+
+class AllStoriesAdmin(admin.ModelAdmin):
+    fields = ["title", "text", "by", "url", "score"]
+
+
 class StoryAdmin(admin.ModelAdmin):
     inlines = [Comment2Inline]
     fields = ["title", "text", "by", "url", "score"]
@@ -41,9 +49,9 @@ class PollAdmin(admin.ModelAdmin):
     fields = ["title", "text", "by", "url", "score"]
 
 
-admin.site.register(Job)
+admin.site.register(Job, AllStoriesAdmin)
 admin.site.register(Story, StoryAdmin)
 admin.site.register(Poll, PollAdmin)
 admin.site.register(Comment, CommentAdmin)
-admin.site.register(PollOption)
-admin.site.register(AllStories)
+admin.site.register(PollOption, AllStoriesAdmin)
+admin.site.register(AllStories, AllStoriesAdmin)
