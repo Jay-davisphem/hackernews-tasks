@@ -50,7 +50,7 @@ def fetch_children(type, kids, par, obj, sm_n=5, gch=False):
     if not kids:
         return
 
-    for com_id in kids[:sm_n]:
+    for com_id in kids:
         print(
             f"{obj._meta.model_name} parent_id",
             par.id,
@@ -75,7 +75,7 @@ def fetch_children(type, kids, par, obj, sm_n=5, gch=False):
     print()
 
 
-def save_to_db(news_ids, num=20):
+def save_to_db(news_ids, num=100):
     news_ids = list(reversed(sorted(news_ids)))[:num]
     if news_ids:
         exists = AllStories.objects.filter(obj_id=news_ids[0]).exists()
@@ -115,6 +115,7 @@ def scheduled_tasks1():
         + fetch_news(job_news_url)
         + fetch_news(ask_news_url)
     )
+    news_id = set(news_id)
     save_to_db(news_ids)
     print("Task ran")
 
