@@ -115,7 +115,7 @@ def scheduled_tasks1():
         + fetch_news(job_news_url)
         + fetch_news(ask_news_url)
     )
-    news_id = set(news_id)
+    news_ids = set(news_ids)
     save_to_db(news_ids)
     print("Task ran")
 
