@@ -5,7 +5,7 @@ from django.shortcuts import redirect, render
 from .models import AllStories, Comment, Job, Poll, Story
 
 
-def paginate(all_stories, page, num=20):
+def paginate(all_stories, page, num=10):
     paginator = Paginator(all_stories, num)
     page_obj = paginator.get_page(page)
     page_obj.adjusted_elided_pages = paginator.get_elided_page_range(page)
