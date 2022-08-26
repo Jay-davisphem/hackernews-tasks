@@ -1,18 +1,21 @@
 <section class='top-most'>
-    <form method='get' action=''>
-        {% csrf_token %}
-        <select name='type'>
-            <option value=''></option>
-            <option>Job</option>
-            <option>Story</option>
-            <option>Poll</option>
-        </select>
-        <input type='submit' value='Filter' />
-        <input type='reset' value='Reset filter' />
-    </form>
-    <form method='get' action=''>
-        {% csrf_token %}
-        <input type='search' name='search' />
-        <input type='submit' value='Search' />
-    </form>
+    <h1>All News Items</h1>
+    <section class='forms'>
+        <form method='get' action=''>
+            {% csrf_token %}
+            <select name='type' id='formik'>
+                <option value=''>▼</option>
+                <option>Job</option>
+                <option>Story</option>
+                <option>Poll</option>
+            </select>
+            <input type='submit' value='Filter' />
+            <input type='reset' value='Reset filter' />
+        </form>
+        <form method='get' action=''>
+            {% csrf_token %}
+            <input type='search' name='search' />
+            <input type='submit' value='Search' />
+        </form>
+    </section>
 </section>

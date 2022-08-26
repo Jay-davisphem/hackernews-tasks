@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html>
+{% load static %}
 
 <head>
     <title>{% block title %}News Feed{% endblock %}</title>
+    <link rel='stylesheet' href="{% static 'css/base.css'%}" type='text/css' />
+    <link rel='stylesheet' href="{% static 'css/body.css'%}" type='text/css' />
+    {% block extra %}{% endblock %}
 </head>
 
 <body>

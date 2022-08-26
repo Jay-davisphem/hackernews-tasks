@@ -1,0 +1,43 @@
+.h1 {
+  font-size: 2rem;
+  text-decoration: none;
+  color: white;
+}
+.h1:hover {
+  color: var(--main-head-text);
+}
+.h1:visited {
+  color: var(--inverse-color);
+}
+
+.below-h1-sib-cont {
+  font-size: 1.4rem;
+}
+.below-h1-sib-cont a,
+.below-h1-sib-cont a:link {
+  text-decoration: none;
+  color: var(--main-head-text);
+}
+.below-h1-sib-cont a:hover {
+  color: var(--main-bg-color);
+}
+.below-h1 {
+  padding: 1rem;
+  padding-left: 0;
+  color: var(--main-bg-color);
+  font-weight: 700;
+}
+.beside-h1 {
+  color: var(--all-text-color);
+  font-size: 1.2rem;
+}
+.beside-h1:hover {
+  color: white;
+}
+.h1-sib-cont {
+  display: flex;
+  column-gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5em;
+  align-items: center;
+}

@@ -1,9 +1,9 @@
 {% load split_it %}
-{% if i.url %}
 <section class='h1-sib-cont'>
-    <a href="{{ i.url }}" class='h1'>{{i.title}}</a><a class='beside-h1' href="{{i.url}}">&nbsp;{{ i.url|strip_it:'' }}</a>
+    {% if i.url %}
+    <a href="{{ i.url }}" class='h1'>{{i.title}} ({{i.type}})</a><a class='beside-h1' href="{{i.url}}">{{ i.url|strip_it:'' }}</a>
     {% else %}
-    <a href="{% url 'comments' i.pk %}" class='h1'>{{ i.title }}</a>
+    <a href="{% url 'comments' i.pk %}" class='h1'>{{ i.title }} ({{i.type}})</a>
     {% endif %}
 </section>
 <section class='below-h1-sib-cont'>
@@ -20,7 +20,7 @@
         comment
         {% endif %}
         {% elif i.type == 'poll' %}
-        {{i.poll_comments}}
+        {{i.poll_comments.count}}
         {% if i.poll_comments.count > 1 %}
         comments
         {% else %}

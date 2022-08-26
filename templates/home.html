@@ -1,7 +1,13 @@
 {% extends 'layout.html' %}
+{% load static %}
+{% block extra%}
+<link rel='stylesheet' type='text/css' href="{% static 'css/top.css' %}" />
+<link rel='stylesheet' type='text/css' href="{% static 'css/navbar.css' %}" />
+<link rel='stylesheet' type='text/css' href="{% static 'css/pagination.css' %}" />
+{% endblock %}
+
 {% block header %}
 <header>
-    <h1>All News Items</h1>
     {% include 'top.html' %}
     {% include 'navbar.html' %}
 </header>
@@ -10,7 +16,7 @@
 <ul style='list-style-type: none'>
     {% for i in page_obj %}
     <li class='each-heading'>
-    {% include 'body.html' %}
+        {% include 'body.html' %}
     </li>
     {% endfor %}
     {% include 'pagination.html' %}

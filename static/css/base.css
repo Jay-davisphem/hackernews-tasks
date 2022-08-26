@@ -1,7 +1,90 @@
-:root{
-  --main-bg-color: #F4F8FB;
-  --all-text-color: #6E767B;
-  --main-head-text: #737B7F;
-  --story-bg-color: #6DC3F3;
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+
+:root {
+  --main-bg-color: #f4f8fb;
+  --all-text-color: #6e767b;
+  --main-head-text: #737b7f;
+  --story-bg-color: #6dc3f3;
   --story-text-color: #ffffff;
+  --inverse-color: #e85e40;
+}
+*,
+*:before,
+*:after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: var(--main-bg-color);
+  color: var(--all-text-color);
+  padding: 1em;
+}
+
+.each-heading {
+  background: var(--story-bg-color);
+  margin: 2rem;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.comments-name {
+  font-size: 2em;
+  border-top: 1px solid var(--story-bg-color);
+  border-bottom: 1px solid var(--story-bg-color);
+  padding-top: 1em;
+}
+
+.paddit.textss {
+  padding: 1em;
+  font-size: 1.5em;
+}
+
+section#comment-sec {
+  margin: 1em 0 0 1em;
+  display: flex;
+  flex-direction: column;
+}
+.oga-comment {
+  padding: 1em;
+  display: flex;
+  row-gap: 0.5rem;
+  flex-direction: column;
+  border-bottom: 0.1px solid var(--story-bg-color);
+}
+.comments-of-comment {
+  margin-right: 1em;
+}
+.go-back,
+.go-back:link {
+  color: white;
+  display: inline-block;
+  background: var(--story-bg-color);
+  padding: 1em;
+  border-radius: 8px;
+  text-decoration: none;
+  margin-top: 1em;
+}
+.go-back:hover,
+.go-back:active {
+  color: var(--story-bg-color);
+  background: white;
+  border: 1px solid var(--story-bg-color);
+}
+.below-below {
+  font-size: 1rem;
+  color: var(--story-bg-color);
+}
+.below-below a,
+.below-below a:link {
+  text-decoration: none;
+  color: var(--main-head-text);
+}
+
+.below-below a:hover {
+  color: var(--story-bg-color);
+}
+.textss {
+  line-height: 1.4;
+  font-size: 1rem;
 }

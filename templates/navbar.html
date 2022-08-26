@@ -3,6 +3,5 @@
     <a href="{% url 'listing' page_obj.number %}?type=story">Stories</a>
     <a href="{% url 'listing' page_obj.number %}?type=job">Jobs</a>
     <a href="{% url 'listing' page_obj.number %}?type=poll">Polls</a>
-    <a href="{% url 'listing' page_obj.number %}?type=poll">Past</a>
-    <a href="{% url 'listing' page_obj.number %}?type=poll">Comments</a>
+    <a href="{% url 'listing' page_obj.number %}?past=True">Past</a>
 </nav>

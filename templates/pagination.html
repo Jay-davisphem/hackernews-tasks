@@ -23,7 +23,7 @@
     <section class='second-pag'>
         {% for page_number in page_obj.adjusted_elided_pages %}
         {% if page_number == page_obj.paginator.ELLIPSIS or page_number == page_obj.number %}
-        {{page_number}}
+        <a class='current'>{{page_number}}</a>
         {% else %}
         <a href="{% url 'listing' page_number %}" class="{% if page_number == page_obj.number %}current{% endif %} pag-no">
             {{page_number}}
