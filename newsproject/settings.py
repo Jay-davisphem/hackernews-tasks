@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "newsapi",
     # external apps
     "rest_framework",
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [

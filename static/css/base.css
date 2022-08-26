@@ -34,7 +34,13 @@ body {
   border-bottom: 1px solid var(--story-bg-color);
   padding-top: 1em;
 }
-
+.news-name {
+  font-size: 2em;
+  margin-top: 3rem;
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+  text-decoration: underline;
+}
 .paddit.textss {
   padding: 1em;
   font-size: 1.5em;

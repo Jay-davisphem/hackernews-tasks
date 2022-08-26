@@ -7,7 +7,7 @@ from newsapp import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("newsapp.urls")),
-    path("api/", include("newsapi.urls")),
+    path("api/", include("newsapi.urls"), name="api"),
 ]
 
 urlpatterns += static(
