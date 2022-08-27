@@ -12,8 +12,8 @@ To run this project on your local machine, please follow the following steps:
 * install the requirements py running ```pip install -r requirements.txt```
 * You can use sqlite3 as your local Database or PostgreSQL
   * To use sqlite3 do nothing and continue to the next step
-  * Or To use PostgreSQL just create a database with psql or any services you use and create .pg_service.conf file in your system home directory if you are on linux(You will have to set the directory to find the file if you are on windows using ```setx PGSYSCONFDIR "<path_to_dir>"``` and then define pg_service.conf in that specified directory) then define ```USE_PROD=1``` in the .env file and ```localhost:5432:<DATABASE NAME>:<USER>:<PASSWORD>``` in a .my_pgpass located in your root project folder where .env is located.
-  - [ ] *NOTE:* I use this resources to set the database up. [4.0 POSTGRES SETUP](https://docs.djangoproject.com/en/4.0/ref/databases/#postgresql-notes) and this image
+  * Or To use PostgreSQL just create a database with psql or any services you use and create ```.pg_service.conf``` file in your system home directory if you are on linux(You will have to set the directory to find the file if you are on windows using ```setx PGSYSCONFDIR "<path_to_dir>"``` and then define ```pg_service.conf``` in that specified directory) then define ```USE_PROD=1``` in the .env file and ```localhost:5432:<DATABASE NAME>:<USER>:<PASSWORD>``` in a .my_pgpass located in your root project folder where .env is located.
+  - [ ] *NOTE:* I use this resources to set the database up. [Django 4.0 POSTGRES SETUP](https://docs.djangoproject.com/en/4.0/ref/databases/#postgresql-notes) and this image
   ![POSTGRES SETTING IMAGE](/static/img/database_guide.png)
   * Run migrations by doing ```python -m manage.py makemigrations``` and ```python -m manage.py migrate```
 * This projects use celery to do background tasks, so spin up celery worker and beat using the following commands still inside virtualenv:
