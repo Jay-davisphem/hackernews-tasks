@@ -78,6 +78,17 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+USE_POSTGRES = os.getenv("USE_PROD")
+if USE_POSTGRES == "1":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "OPTIONS": {
+                "service": "my_service",
+                "passfile": ".my_pgpass",
+            },
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -114,7 +125,7 @@ MEDIA_URL = "/images/"
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-STATIC_RO0T = 'staticfiles'
+STATIC_RO0T = "staticfiles"
 
 MEDIA_ROOT = BASE_DIR / "images"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
@@ -137,6 +148,5 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 
-if os.getenv("USE_HEROKU"):
-    db_from_env = dj_database_url.config(conn_max_age=500)
-    DATABASES["default"].update(db_from_env)
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES["default"].update(db_from_env)
