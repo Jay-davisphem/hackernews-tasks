@@ -12,7 +12,7 @@ To run this project on your local machine, please follow the following steps:
 * install the requirements py running ```pip install -r requirements.txt```
 * You can use sqlite3 as your local Database or PostgreSQL
   * To use sqlite3 do nothing and continue to the next step
-  * Or To use PostgreSQL just create a .env file and define ```USE_PROD=1```, ```DB_NAME=<your database name>```` and ``DB_PWD-<your created postgresql database password```
+  * Or To use PostgreSQL just create a .env file and define ```USE_PROD=1```, ```DB_NAME=<your database name>```` and ``DB_PWD-<your created postgresql database  user password```
 * Run migrations by doing ```python -m manage.py makemigrations``` and ```python -m manage.py migrate```
 * This projects use celery to do background tasks, so spin up celery worker and beat using the following commands still inside virtualenv:
   * ```python -m celery -A newsapp worker -l info```
