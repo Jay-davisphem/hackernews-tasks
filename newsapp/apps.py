@@ -7,3 +7,6 @@ class NewsappConfig(AppConfig):
 
     def ready(self):
         import newsapp.receivers
+        from newsapp import tasks
+
+        tasks.start()

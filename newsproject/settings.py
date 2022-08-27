@@ -1,6 +1,5 @@
 from pathlib import Path
 
-from celery.schedules import crontab
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -123,12 +122,3 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-CELERY_BROKER_URL = "redis://localhost:6379"
-CELERY_RESULT_BACKEND = "redis://localhost:6379"
-
-CELERY_BEAT_SCHEDULE = {
-    "scheduled_fetch_hackernews": {
-        "task": "newsapp.tasks.scheduled_task",
-        "schedule": crontab(minute="*/1"),
-    },
-}
