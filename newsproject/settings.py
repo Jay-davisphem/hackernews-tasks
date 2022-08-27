@@ -49,7 +49,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 ROOT_URLCONF = "newsproject.urls"
 
 TEMPLATES = [
@@ -128,6 +127,7 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 STATIC_ROOT = 'staticfiles'
 MEDIA_ROOT = BASE_DIR / "images"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
