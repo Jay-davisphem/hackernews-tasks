@@ -126,8 +126,7 @@ MEDIA_URL = "/images/"
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-STATICFILES_DIRS = [BASE_DIR / "static"]
-
+STATIC_ROOT = 'staticfiles'
 MEDIA_ROOT = BASE_DIR / "images"
 
 REST_FRAMEWORK = {
