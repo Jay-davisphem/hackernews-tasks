@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pridi:wght@400;500;600;700&display=swap");
 
 :root {
   --main-bg-color: #f4f8fb;
@@ -14,6 +15,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: "Pridi", serif;
 }
 body {
   background-color: var(--main-bg-color);
