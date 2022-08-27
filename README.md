@@ -1,7 +1,7 @@
-# EXPRESS NEWS PROJECT by David Oluwafemi 
+# EXPRESS NEWS PROJECT by David Oluwafemi
 
 This repository contains a web services(both web application and API), of a news crawling website(Done as a Fullstack Developer task given by [Dowstrademus](https://www.drattraderapp.com/).
-I made use of Python(Django, Django rest framework), HTML and CSS. I used DRF because it's faster and better than writing all the reusable code myself and whereas, it is a good Software Development practice. 
+I made use of Python(Django, Django rest framework), HTML and CSS. I used DRF because it's faster and better than writing all the reusable code myself and whereas, it is a good Software Development practice.
 
 To run this project on your local machine, please follow the following steps:
 
@@ -13,7 +13,8 @@ To run this project on your local machine, please follow the following steps:
 * You can use sqlite3 as your local Database or PostgreSQL
   * To use sqlite3 do nothing and continue to the next step
   * Or To use PostgreSQL just create a database with psql or any services you use and create .pg_service.conf file in your system home directory if you are on linux(You will have to set the directory to find the file if you are on windows using ```setx PGSYSCONFDIR "<path_to_dir>"``` and then define pg_service.conf in that specified directory) then define ```USE_PROD=1``` in the .env file and ```localhost:5432:<DATABASE NAME>:<USER>:<PASSWORD>``` in a .my_pgpass located in your root project folder where .env is located.
-  - [^] *NOTE: * I use this resources to set the database up. [4.0 POSTGRES SETUP](https://docs.djangoproject.com/en/4.0/ref/databases/#postgresql-notes) and this image ![POSTGRES SETTING IMAGE](/static/img/database_guide.png)
+  - [  ] *NOTE: * I use this resources to set the database up. [4.0 POSTGRES SETUP](https://docs.djangoproject.com/en/4.0/ref/databases/#postgresql-notes) and this image
+  ![POSTGRES SETTING IMAGE](/static/img/database_guide.png)
 
 * Run migrations by doing ```python -m manage.py makemigrations``` and ```python -m manage.py migrate```
 * This projects use celery to do background tasks, so spin up celery worker and beat using the following commands still inside virtualenv:
@@ -42,4 +43,3 @@ It is also important to expose an API so that our data can be consumed:
   - [x] Only display top-level items in the list, and display their children (comments, for example) on a detail page;
   - [x] In the API, allow updating and deleting items if they were created in the API (but never data that was retrieved from Hacker News);
   - [x] Be creative! :)
-
