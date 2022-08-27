@@ -1,0 +1,42 @@
+.pagination {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--story-bg-color);
+  border-radius: 4px;
+}
+
+.pagination > * {
+  display: flex;
+  justify-content: center;
+  column-gap: 2rem;
+  align-items: center;
+  padding: 1rem;
+  flex-wrap: wrap;
+}
+
+.pagination * > * {
+  text-decoration: none;
+  font-size: 2em;
+}
+.second-pag a,
+.second-pag a:link {
+  display: inline-block;
+  border: 1px solid var(--story-bg-color);
+  padding: 1rem;
+  color: var(--story-bg-color);
+  border-radius: 50%;
+}
+.second-pag a:hover {
+  color: white;
+  background: var(--story-bg-color);
+}
+.second-pag a:visited {
+  color: var(--inverse-color);
+}
+a.current {
+  border: none;
+}
+a.current:hover {
+  color: var(--story-bg-color);
+  background: transparent;
+}

@@ -20,7 +20,7 @@ SECRET_KEY = os.getenv(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = not (os.getenv("DJANGO_DEBUG", "True") == "False")
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "*.herokuapp.com"]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -49,7 +49,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 ROOT_URLCONF = "newsproject.urls"
 
 TEMPLATES = [
@@ -118,6 +117,7 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_RO0T = 'staticfiles'
 
 MEDIA_ROOT = BASE_DIR / "images"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
