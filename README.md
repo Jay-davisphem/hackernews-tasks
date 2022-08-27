@@ -17,9 +17,7 @@ To run this project on your local machine, please follow the following steps:
   ![POSTGRES SETTING IMAGE](/static/img/database_guide.png)
 
 * Run migrations by doing ```python -m manage.py makemigrations``` and ```python -m manage.py migrate```
-* This projects use celery to do background tasks, so spin up celery worker and beat using the following commands still inside virtualenv:
-  * ```python -m celery -A newsapp worker -l info```
-  * ```python -m celery -A newsapp beat -l info```
+* This projects use Advanced Python Scheduler for job scheduling of news fetching from hackernews so no setup needed
 * Run the server using ```python -m manage.py runserver```
 Links to the API Documentations is part of the webapp navbar items and you can find them in ```/api/swagger or /api or /api/redoc```. They're  automatically generated and well documented
 
