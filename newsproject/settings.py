@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 
+import dj_database_url
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -12,10 +13,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure--%xqc$1@_7v7+!oxj6z8xokdh7jcs99au(%cv%#0fzt#d36w(1"
-
+SECRET_KEY = os.getenv(
+    "DJANGO_SECRET_KEY",
+    "django-insecure--%xqc$1@_7v7+!oxj6z8xokdh7jcs99au(%cv%#0fzt#d36w(1",
+)
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = not(os.getenv('DJANGO_DEBUG', 'True') == 'False')
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "*.herokuapp.com"]
 
@@ -76,21 +79,18 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
-DB_PWD = os.getenv("DB_PWD")
-DB_NAME = os.getenv("DB_NAME")
-USE_PROD = os.getenv('USE_PROD')
-DB_USER = os.getenv('DB_USER')
-if USE_PROD == "1" and DB_PWD and DB_NAME and DB_USER:
+USE_POSTGRES = os.getenv("USE_PROD")
+if USE_POSTGRES == "1":
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": DB_NAME,
-            "USER": DB_USER,
-            "PASSWORD": DB_PWD,
-            "HOST": "localhost",
-            "PORT": "5432",
+            "ENGINE": "django.db.backends.postgresql",
+            "OPTIONS": {
+                "service": "my_service",
+                "passfile": ".my_pgpass",
+            },
         }
     }
+
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -139,7 +139,6 @@ REST_FRAMEWORK = {
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-import dj_database_url
 if os.getenv("USE_HEROKU"):
     db_from_env = dj_database_url.config(conn_max_age=500)
     DATABASES["default"].update(db_from_env)

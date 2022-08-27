@@ -3,3 +3,4 @@ __pycache__
 db.sqlite3
 celerybeat-schedule.db
 .env
+.my_pgpass
