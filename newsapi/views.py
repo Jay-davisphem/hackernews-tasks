@@ -42,15 +42,17 @@ class AllStoriesViewSet(viewsets.ModelViewSet):
         type = request.GET.get("type")
         text = request.GET.get("text")
         fetched = request.GET.get("fetched")
+        _fetch = fetched
+        fetched = True if fetched == 'True' else False
         print(type, text, fetched)
-        qs = self.queryset
-        if type and text and fetched != None:
-            qs = qs.filter(
-                text__icontains=text.lower(), type=type.lower(), fetched=fetched
-            )
+        qs = None
+        if _fetch == None:
+            qs = self.queryset
         else:
-            if fetched != None:
-                qs = qs.filter(fetched=fetched)
+            qs = self.queryset.filter(fetched=fetched)
+        if type and text:
+            qs = qs.filter(text__icontains=text.lower(), type=type.lower())
+        else:
             if type:
                 qs = qs.filter(type=type.lower())
             if text:

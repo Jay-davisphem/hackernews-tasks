@@ -18,8 +18,6 @@ class AllStoriesSerializers(serializers.ModelSerializer):
             "title",
             "url",
             "time",
-            "story_comments",
-            "poll_comments",
         ]
 
 
