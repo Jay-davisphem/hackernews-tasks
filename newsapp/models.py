@@ -16,7 +16,7 @@ class AllStories(models.Model):
     class Meta:
         verbose_name = "All Story"
         verbose_name_plural = "All Stories"
-        ordering = ['-time', 'text']
+        ordering = ['-time', 'title']
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -69,6 +69,7 @@ class Story(AllStories):
     objects = StoryManager()
 
     class Meta:
+        ordering = ['-time', 'title']
         proxy = True
         verbose_name = "Story"
         verbose_name_plural = "Stories"
@@ -95,6 +96,7 @@ class Poll(AllStories):
     # descendants count in views
     class Meta:
         proxy = True
+        ordering = ['-time', 'title']
 
     def __str__(self):
         return f"Poll {self.by} - {self.id}"
