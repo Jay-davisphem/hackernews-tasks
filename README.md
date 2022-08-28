@@ -41,3 +41,11 @@ It is also important to expose an API so that our data can be consumed:
   - [x] Only display top-level items in the list, and display their children (comments, for example) on a detail page;
   - [x] In the API, allow updating and deleting items if they were created in the API (but never data that was retrieved from Hacker News);
   - [x] Be creative! :)
+  
+  
+## CHALLENGES
+* I intended to use celery for job scheduling initially but decide otherwise when I realised it's no more supported and maintained from version 4.x for windows [celery support for windows](https://docs.celeryq.dev/en/stable/faq.html#windows). I then researched on other options like [huey](https://huey.readthedocs.io/en/latest/) among others before I decided to us [Python advanced schduler](https://apscheduler.readthedocs.io/en/3.x/). Which works well accross all platform. It's OS dependent just like python.
+* When my tasks was running twice, I researched and realized that starting my tasks from AppConfig.ready method is the problems. It'll always run twice unless I put --noreload when running my server. But I solved it by starting the tasks in the base urls.py
+* Hackernews api use proxy to store all there models i.e all the models(story, poll, comment, pollopt and job use just one table. I based my new news fetch on the fact that the latest item will have the highest id. So after the initial 100 news items has been fetched, for subsequent fetch I check if the highest id has already been saved in the database, I won't make a recurring fetch, but once it's not there the latest news is fetched every 5 minutes.
+* This branch is my task submission, but you can check [this](https://github.com/Jay-davisphem/hackernews-tasks/tree/main) branch which contains my celery version code. This branch(submitted) is already deployed on heroku while the celery version is having problems on heroku but is working perfectly locally.
+Note I intensionally made this branch the default.
