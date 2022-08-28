@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from newsapp import views
+from newsapp import views, tasks
 
 print("\n\n\nurls\n\n\n")
 urlpatterns = [
@@ -15,3 +15,5 @@ urlpatterns += static(
     settings.MEDIA_URL,
     document_root=settings.MEDIA_ROOT,
 )
+
+tasks.start()
