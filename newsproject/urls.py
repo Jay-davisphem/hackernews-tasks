@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.urls import include, path
 from newsapp import views
 
+print("\n\n\nurls\n\n\n")
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("newsapp.urls")),
