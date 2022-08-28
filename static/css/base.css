@@ -96,6 +96,14 @@ section#comment-sec {
   line-height: 1.4;
   font-size: 1rem;
 }
+footer {
+  margin-top: 2em;
+  text-align: center;
+}
 .footer {
   color: var(--story-bg-color);
+}
+.footer:hover {
+  color: var(--main-bg-color);
+  background: var(--story-bg-color);
 }
