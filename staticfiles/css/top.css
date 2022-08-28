@@ -1,0 +1,61 @@
+section.top-most {
+}
+
+section.top-most h1 {
+  color: var(--main-head-text);
+  font-size: 3em;
+  text-align: center;
+  margin: 3rem;
+  font-family: "Permanent Marker", cursive;
+}
+
+.forms {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  row-gap: 1rem;
+  align-items: center;
+}
+
+.forms form {
+  display: flex;
+  align-items: center;
+  column-gap: 1em;
+}
+
+.forms form input,
+select {
+  appearance: none;
+  color: var(--story-bg-color);
+  font-size: 1.3rem;
+  padding: 0.5rem;
+  outline: 1px solid var(--story-bg-color);
+  border: none; //1px solid var(--story-bg-color);
+  border-radius: 4px;
+}
+.forms form input:focus {
+  border: 1px solid var(--story-bg-color);
+}
+
+.forms form input[type="submit"],
+.forms form input[type="reset"] {
+  background-color: var(--story-bg-color);
+  color: white;
+}
+.forms form input[type="submit"]:hover,
+.forms form input[type="reset"]:hover {
+  background-color: white;
+  color: var(--story-bg-color);
+}
+
+select {
+  background: white;
+  padding: 0;
+  height: 20px;
+  text-align: center;
+}
+
+#formik * {
+  color: red;
+}

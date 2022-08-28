@@ -16,7 +16,7 @@ class AllStories(models.Model):
     class Meta:
         verbose_name = "All Story"
         verbose_name_plural = "All Stories"
-        ordering = ['-time']
+        ordering = ['-time', 'text']
 
     def save(self, *args, **kwargs):
         if not self.pk:
