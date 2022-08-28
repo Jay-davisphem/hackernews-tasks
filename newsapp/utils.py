@@ -13,13 +13,26 @@ ask_news_url = "https://hacker-news.firebaseio.com/v0/askstories.json"
 job_news_url = "https://hacker-news.firebaseio.com/v0/jobstories.json"
 
 
-def fetch_news(url):
+def fetch_news_no_check(url):
     r = requests.get(url)
     if r.status_code == 200:
         return r.json()
 
 
+def fetch_news(url):
+    ans = None
+    try:
+        ans = fetch_news_no_check(url)
+    except Exception as e:
+        print("Failed to Fetch --->", e)
+        return []
+    else:
+        return ans
+
+
 def get_results_keys(news_detail):
+    if not news_detail:
+        return None
     type = news_detail.get("type")
     obj_id = str(news_detail.get("id"))
     by = news_detail.get("by")
@@ -59,6 +72,9 @@ def fetch_children(type, kids, par, obj, sm_n=5, gch=False):
             end="...",
         )
         sing_com = fetch_news(f"{news_base_detail_url}{com_id}.json")
+        if not sing_com:
+            print("Not results")
+            return
         com_lte = get_results_keys(sing_com)
         real_com = com_lte[0]
         s_type = real_com["type"]
@@ -69,13 +85,13 @@ def fetch_children(type, kids, par, obj, sm_n=5, gch=False):
         else:
             s_par = obj.objects.create(**real_com, poll_id=par.id)
         print(f"{obj._meta.model_name} created successfully")
+        fetch_children(s_type, s_kids, s_par, obj, sm_n=2, gch=True)
         if gch:
             print("Grandchildren bossman")
-        fetch_children(s_type, s_kids, s_par, obj, sm_n=2, gch=True)
     print()
 
 
-def save_to_db(news_ids, num=100):
+def save_to_db(news_ids, num=10):
     news_ids = list(reversed(sorted(news_ids)))[:num]
     if news_ids:
         exists = AllStories.objects.filter(obj_id=news_ids[0]).exists()
@@ -90,6 +106,9 @@ def save_to_db(news_ids, num=100):
     }
     for i in news_ids:
         news_detail = fetch_news(f"{news_base_detail_url}{i}.json")
+        if not news_detail:
+            print("No results")
+            return
         ite = get_results_keys(news_detail)
         news_vals = ite[0]
         kids = ite[-1][0]
