@@ -16,4 +16,4 @@ urlpatterns += static(
     document_root=settings.MEDIA_ROOT,
 )
 
-#tasks.start()
+tasks.start()
