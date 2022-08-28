@@ -18,7 +18,7 @@ SECRET_KEY = os.getenv(
     "django-insecure--%xqc$1@_7v7+!oxj6z8xokdh7jcs99au(%cv%#0fzt#d36w(1",
 )
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = not(os.getenv('DJANGO_DEBUG', 'True') == 'False')
+DEBUG = not (os.getenv("DJANGO_DEBUG", "True") == "False")
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "*.herokuapp.com"]
 
@@ -37,11 +37,11 @@ INSTALLED_APPS = [
     # external apps
     "rest_framework",
     "drf_yasg",
-    'corsheaders',
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
-         'corsheaders.middleware.CorsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -127,7 +127,7 @@ MEDIA_URL = "/images/"
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-STATIC_ROOT = 'staticfiles'
+STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_ROOT = BASE_DIR / "images"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
@@ -141,9 +141,7 @@ REST_FRAMEWORK = {
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = (
-  'http://localhost:8000',
-)
+CORS_ORIGIN_WHITELIST = ("http://localhost:8000",)
 if os.getenv("USE_HEROKU"):
     db_from_env = dj_database_url.config(conn_max_age=500)
     DATABASES["default"].update(db_from_env)
