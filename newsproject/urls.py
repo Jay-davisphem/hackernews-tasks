@@ -2,9 +2,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from newsapp import views, tasks
+from newsapp import views, tasks, utils
 
-print("\n\n\nurls\n\n\n")
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("newsapp.urls")),
@@ -16,4 +15,5 @@ urlpatterns += static(
     document_root=settings.MEDIA_ROOT,
 )
 
+print("\nNews fetching tasks get started here, It will run once and every subsequent five minutes.\n")
 tasks.start()

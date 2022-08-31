@@ -13,13 +13,22 @@ ask_news_url = "https://hacker-news.firebaseio.com/v0/askstories.json"
 job_news_url = "https://hacker-news.firebaseio.com/v0/jobstories.json"
 
 
-def fetch_news(url):
+def fetch_news(url: str) -> list: # or dict
+    """
+    Fetches news items from hackerank,
+    can return list of objects of a single object,
+    depending on the urls passed to it.
+    """
     r = requests.get(url)
     if r.status_code == 200:
         return r.json()
 
 
-def get_results_keys(news_detail):
+def get_results_keys(news_detail: dict) -> tuple:
+    """
+    Clean up news detail to return the necessary key,
+    value pairs to be saved in the database
+    """
     type = news_detail.get("type")
     obj_id = str(news_detail.get("id"))
     by = news_detail.get("by")
@@ -46,7 +55,13 @@ def get_results_keys(news_detail):
     return vals, (kids, parent, parts)
 
 
-def fetch_children(type, kids, par, obj, sm_n=5, gch=False):
+def fetch_children(
+    type: str, kids: list, par: int, 
+    obj, sm_n: int = 5, gch: bool = False,
+):
+    '''
+    Use to fetch comments and comments deeply nested in commennt.
+    '''
     if not kids:
         return
 
@@ -75,11 +90,21 @@ def fetch_children(type, kids, par, obj, sm_n=5, gch=False):
     print()
 
 
-def save_to_db(news_ids, num=100):
+def save_to_db(news_ids: list, num: int=100):
+    '''
+    Central point for the utilities, 
+    Use the above functions to fetch, create and save news items and comments to the database.
+    Fetch the latest 100 news and it is related comments and poll option 
+    and save it to the database.
+
+    Checks if the last(newest) item id is already 
+    in the database first before fetching the details of the list of items.
+    '''
     news_ids = list(reversed(sorted(news_ids)))[:num]
     if news_ids:
         exists = AllStories.objects.filter(obj_id=news_ids[0]).exists()
         if exists:
+            print('No new news items... Await the next run!')
             return
     else:
         return
@@ -109,14 +134,14 @@ def save_to_db(news_ids, num=100):
 
 def scheduled_tasks1():
     print("Task started")
-    news_ids = (fetch_news(top_news_url) + fetch_news(show_news_url) +
-                fetch_news(job_news_url) + fetch_news(ask_news_url))
-    print(f'len(news_id) = {len(news_ids)}')
+    news_ids = (
+        fetch_news(top_news_url)
+        + fetch_news(show_news_url)
+        + fetch_news(job_news_url)
+        + fetch_news(ask_news_url)
+    ) # Merge top, show, job and news_ids
+    print(f"len(news_id) = {len(news_ids)}")
     news_ids = set(news_ids)
-    print(f'after len(news_id) = {len(news_ids)}')
+    print(f"after len(news_id) = {len(news_ids)}")
     save_to_db(news_ids)
     print("Task ran")
-
-
-def test_tasks():
-    print("Tasks running Halleluyahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
